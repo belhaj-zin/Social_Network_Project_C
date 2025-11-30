@@ -10,7 +10,7 @@ typedef struct {
     int id_post;
     char content[256];
     long timestamp; // the time the post was created
-    struct post* prvious;
+    struct post* previous;
 }post ;
 
 //Define the node structure that will hold the user information
