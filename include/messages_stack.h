@@ -92,21 +92,18 @@ void afficherTousLesPosts(post *pile) {
     printf("\n===== Affichage de tous les posts =====\n\n");
 
     post *courant = pile;  // Pointer temporaire pour traverser la pile
-    int position = 1;
+
 
     // Parcourir la pile du sommet vers le bas
     while (courant != NULL) {
-        printf("Post #%d\n", position);
-        printf("  ID: %d\n", courant->id_post);
         printf("  Contenu: %s\n", courant->contenu);
-        printf("  Timestamp: %ld\n", courant->timestamp);
         printf("----------------------------------------\n");
 
         courant = courant->previous;  // Avancer au post suivant
         position++;
     }
 
-    printf("\nTotal: %d post(s) affiche(s).\n\n", position - 1);
+    printf("\nTotal: %d post(s) affiche(s).\n\n");
 }
 
 
