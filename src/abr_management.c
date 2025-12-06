@@ -97,8 +97,31 @@ node* delete_max(node* tree){
     return tree; // return the unchanged tree pointer
 }
 
+// Helper functions to free linked lists and posts stack
+void free_linked_list(LLnode* head) {
+    LLnode* current = head;
+    while (current != NULL) {
+        LLnode* next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+void free_posts_stack(post* top) {
+    post* current = top;
+    while (current != NULL) {
+        post* next = current->previous;
+        free(current);
+        current = next;
+    }
+}
+
+
+
+
 // Now we can implement the delete function
 node* deleteUser_node(node* tree, int deleted_id) {
+
     if (tree == NULL) {
         fprintf(stderr, "User with ID %d not found. Deletion failed.\n", deleted_id);
         return NULL;
@@ -120,15 +143,36 @@ node* deleteUser_node(node* tree, int deleted_id) {
         } else {
             // Node with two children
             node* max_node = get_max_node(tree->left);
+            
+            // free existing linked lists and posts to avoid memory leaks
+            free_linked_list(tree->friends);   
+            free_linked_list(tree->followers);
+            free_posts_stack(tree->posts);
+
             // transfer all of max_node's data to tree
             tree->id = max_node->id;
             strncpy(tree->name, max_node->name, 50);
             tree->friends = max_node->friends; 
             tree->followers = max_node->followers;  
             tree->posts = max_node->posts;  
+            
+            // assign NULL to max_node's pointers to avoid double free
+            max_node->friends = NULL;
+            max_node->followers = NULL;
+            max_node->posts = NULL;
+            
             // Delete the max node
             tree->left = delete_max(tree->left); 
         }
     }
     return tree;
+}
+
+// Wrapper function to delete a user from the BST
+void deleteUser(BST *tree, int deleted_id) {
+    if (tree == NULL || tree->root == NULL) {
+        fprintf(stderr, "Error: BST structure is NULL.\n");
+        return;
+    }
+    tree->root = deleteUser_node(tree->root, deleted_id);
 }
