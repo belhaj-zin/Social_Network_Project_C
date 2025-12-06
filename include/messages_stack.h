@@ -81,7 +81,6 @@ int estVide(post *pile) {
     return pile == NULL;
 }
 // - Display all messages
-// - Afficher tous les messages de la pile
 void afficherTousLesPosts(post *pile) {
     // Verifier si la pile est vide
     if (pile == NULL) {
@@ -93,18 +92,15 @@ void afficherTousLesPosts(post *pile) {
 
     post *courant = pile;  // Pointer temporaire pour traverser la pile
 
-
     // Parcourir la pile du sommet vers le bas
     while (courant != NULL) {
-        printf("  Contenu: %s\n", courant->contenu);
+        printf("Auteur: %s\n", courant->nom);
+        printf("Contenu: %s\n", courant->contenu);
         printf("----------------------------------------\n");
 
         courant = courant->previous;  // Avancer au post suivant
-        position++;
     }
 
-    printf("\nTotal: %d post(s) affiche(s).\n\n");
+    printf("\n");
 }
-
-
 #endif // MESSAGES_STACK_H
