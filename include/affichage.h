@@ -13,5 +13,6 @@ void display_friendships(int user_id);
 
 // - Display user's followers/subscriptions
 void display_subscriptions(int user_id);
-
+// - show main menu for a user and handles his choices
+void main_menu(int user_id);
 #endif // USER_INTERFACE_H
