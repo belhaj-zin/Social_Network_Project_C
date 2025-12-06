@@ -1,5 +1,5 @@
 //Define the linked list that will be inside the node as the friend and follower lists 
-typedef struct  {
+typedef struct LLnode {
     int id;
     struct LLnode* next;
 } LLnode;
