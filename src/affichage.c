@@ -1,10 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "../include/affichage.h"
+#include "../include/structures.h"
+#include "../include/abr_management.h"
+#include "../include/relations_ll.h"
+#include "../include/messages_stack.h"
+
+
+
 void add_separator() {
     printf("╠════════════════════════════════════════════╣\n");
 }
 
 
 // ============== GENERATE TIMELINE ==============
-void generate_timeline(int user_id) {
+void generate_timeline(BST *users_tree,int user_id) {
     node* current_user = searchUser(&users_tree, user_id);
     
     if (current_user == NULL) {
@@ -25,7 +35,7 @@ void generate_timeline(int user_id) {
     }
 }
 //============= DISPLAY FRIENDSHIPS ==============
-void display_friendships(int user_id) {
+void display_friendships(BST *users_tree,int user_id) {
     node* current_user = searchUser(&users_tree, user_id);
     LLnode* friend = NULL;
     int count = 0;
@@ -65,7 +75,7 @@ void display_friendships(int user_id) {
 }
 
 // ============== DISPLAY SUBSCRIPTIONS ==============
-void display_subscriptions(int user_id) {
+void display_subscriptions(BST *users_tree,int user_id) {
     node* current_user = searchUser(&users_tree, user_id);
     LLnode* follower = NULL;
     int count = 0;
@@ -106,7 +116,7 @@ void display_subscriptions(int user_id) {
 
 
 // TODO: Implement main menu and user interface
-    void main_menu(int user_id) {
+    void main_menu(BST *users_tree,int user_id) {
     int choice;
     node* current_user = searchUser(&users_tree, user_id);
     
@@ -136,13 +146,13 @@ void display_subscriptions(int user_id) {
         
         switch (choice) {
             case 1:
-                generate_timeline(user_id);
+                generate_timeline(users_tree,user_id);
                 break;
             case 2:
-                display_friendships(user_id);
+                display_friendships(users_tree,user_id);
                 break;
             case 3:
-                display_subscriptions(user_id);
+                display_subscriptions(users_tree,user_id);
                 break;
             case 4:
                 printf("Entrez l'ID de l'ami à ajouter:");
@@ -160,10 +170,10 @@ void display_subscriptions(int user_id) {
                 break;
             case 6:
                 printf("Entrez l'ID de la relation à supprimer:");
-                int ID_Cible
+                int ID_Cible;
                 scanf("%d", &ID_Cible);
                 getchar(); // Clear newline
-                LLnode* supprimerRelation(LLnode* liste, int ID_Cible)
+                LLnode* supprimerRelation(LLnode* liste, int ID_Cible);
                 break;
             case 7:
                 printf("Déconnexion réussie. À bientôt, %s!\n", current_user->name);
@@ -176,3 +186,34 @@ void display_subscriptions(int user_id) {
         getchar();
     }
 }
+
+void login_menu() {
+        int user_id;
+        node* user = NULL;
+        
+        printf("\n");
+        add_separator();
+        printf("║         BIENVENUE AU RESEAU SOCIAL            ║\n");
+        add_separator();
+        
+        printf("\nEntrez votre ID utilisateur: ");
+        scanf("%d", &user_id);
+        getchar(); // Clear newline
+        
+        // Search for user in BST
+        user = searchUser(&users_tree, user_id);
+        
+        if (user == NULL) {
+            printf("\n Erreur: Utilisateur avec ID %d non trouvé!\n", user_id);
+            printf("Appuyez sur Entrée pour réessayer...");
+            getchar();
+            return;
+        }
+        
+        printf("\n✓ Connexion réussie!\n");
+        printf("Bienvenue, %s!\n", user->name);
+        printf("Appuyez sur Entrée pour continuer...");
+        getchar();
+        
+        // Show main menu for this user
+        main_menu(user_id);
