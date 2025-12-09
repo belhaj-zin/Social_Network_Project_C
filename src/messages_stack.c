@@ -32,7 +32,7 @@ post* empiler(post *pile, int id_post, char *contenu) {
     
     // Initialiser le nouveau post
     nouveau_post->id_post = id_post;
-    strncpy(nouveau_post->contenu, contenu, 256);
+    strncpy(nouveau_post->content, contenu, 256);
     nouveau_post->timestamp = time(NULL);  // Obtenir l'heure actuelle
     
     // Lier le nouveau post au sommet de la pile

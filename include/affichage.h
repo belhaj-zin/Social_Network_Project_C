@@ -7,9 +7,9 @@
 void add_separator();
 
 // Core UI functions
-void generate_timeline(int user_id);
-void display_friendships(int user_id);
-void display_subscriptions(int user_id);
+void generate_timeline(BST *users_tree,int user_id);
+void display_friendships(BST *users_tree,int user_id);
+void display_subscriptions(BST *users_tree,int user_id);
 
 // Main menu function
 void main_menu(int user_id);
