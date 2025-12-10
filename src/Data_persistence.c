@@ -95,8 +95,8 @@ void load_users(BST* tree, const char* filename) {
     // After ALL users exist in the BST, call the separate function 
     // to read relations.txt and establish links.
     if (feof(file)) {
-        printf("Structural data and posts loaded. Starting relations loading...\n");
-        load_relations_from_file(tree, "relations.txt");
+    printf("Structural data and posts loaded. Starting relations loading...\n");
+    load_relations_from_file(tree, "data/relations.txt");
         printf("User data fully loaded.\n");
     } else if (ferror(file)) {
         perror("Error reading file content");

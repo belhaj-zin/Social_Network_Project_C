@@ -10,8 +10,10 @@ void add_separator();
 void generate_timeline(BST *users_tree,int user_id);
 void display_friendships(BST *users_tree,int user_id);
 void display_subscriptions(BST *users_tree,int user_id);
+void display_all_users(BST *users_tree);
 
 // Main menu function
-void main_menu(int user_id);
+void main_menu(BST *users_tree, int user_id);
+void login_menu(BST *users_tree);
 
 #endif // USER_INTERFACE_H

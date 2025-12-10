@@ -99,6 +99,26 @@ void write_posts_to_file(post* top, FILE* file) {
         current = current->previous; 
     }
 }
+
+void afficherTousLesPosts(post *pile) {
+    if (estVide(pile)) {
+        printf("Aucun post disponible.\n");
+        return;
+    }
+    
+    post *current = pile;
+    int count = 1;
+    
+    while (current != NULL) {
+        printf("Post #%d (ID: %d)\n", count, current->id_post);
+        printf("Contenu: %s\n", current->content);
+        printf("Date: %s\n", ctime(&current->timestamp));
+        printf("---\n");
+        current = current->previous;
+        count++;
+    }
+}
+
 int estVide(post *pile) {
     return pile == NULL;
 }

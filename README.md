@@ -1,52 +1,161 @@
-# Social Network Simulator (C Programming language)
-### Using BST (Binary Search Tree), Linked Lists, and Stacks for Core Management
+# Social Network Simulator
 
-This application is a command-line console simulator designed to model the fundamental data structures and logic of a simplified social networking platform. It provides a robust demonstration of how relationships (Friends, Subscriptions) and content distribution (Timeline) are managed using classic data structures.
+A command-line social network application in C demonstrating fundamental data structures: Binary Search Trees, Linked Lists, and Stacks.
+
+## 📋 Overview
+
+This project simulates a social network with user profiles, bidirectional friendships, unidirectional subscriptions (followers), post publishing, and a chronological timeline aggregating content from friends and followers.
 
 ## ✨ Features
 
-The application supports the following core functionalities:
+### User Management
+- Create new users with unique IDs
+- Search users by ID (O(log n) with BST)
+- Delete user accounts
+- View all registered users
 
-* **User Management (ABR):** Efficient insertion, searching, and deletion of user profiles based on a unique Integer ID.
-* **Relationship Management (Linked Lists):**
-    * **Friendship:** Bidirectional relationship management (mutual acceptance).
-    * **Subscription:** Unidirectional following model (follower sees posts of the followed).
-* **Content Distribution (Stack & Sort):**
-    * Publication history managed using a **Stack (LIFO)** for each user.
-    * **Timeline Generation:** Dynamic creation of the "fil d'actualité" by merging and sorting the latest posts from all Friends and Subscriptions by timestamp.
-* **Data Persistence:**
-    * Saving and loading the complete ABR structure to a **binary file** (`users.bin`).
-    * Saving and loading relationships to a **structured text file** (`relations.txt`).
+### Social Connections
+- **Friendships**: Bidirectional relationships (both users are friends)
+- **Subscriptions**: Unidirectional following (followers see your posts)
+- Add/remove friends
+- Subscribe/unsubscribe to users
 
+### Content & Timeline
+- Publish posts (text messages with timestamps)
+- View personal posts history
+- Delete most recent post
+- **Smart Timeline**: Aggregates and sorts posts from:
+  - Your own posts
+  - All friends' latest posts
+  - All followers' latest posts
+  - Ordered by timestamp (newest first)
 
-## 🏗️ Data Structures & Architecture
-##### Why using these Data structures ?
+### Data Persistence
+- Save/load users to binary file (`data/users.bin`)
+- Save/load relationships to text file (`data/relations.txt`)
+- All data persists between sessions
 
-| **User Directory** | **Binary Search Tree (ABR)** | Provides $O(\log n)$ efficiency for searching, inserting, and deleting users based on the unique User ID. |
+## 🏗️ Data Structures
 
-| **Friends/Subscriptions** | **Singly Linked Lists** | Allows flexible addition/removal of relations without predefining a maximum capacity. Optimal for dynamic, variable-length relationship sets. |
+| Structure | Usage | Complexity |
+|-----------|-------|------------|
+| **Binary Search Tree (BST)** | User storage and retrieval | O(log n) search/insert/delete |
+| **Linked List** | Friends and followers lists | O(1) insert, O(n) search |
+| **Stack (LIFO)** | User posts history | O(1) push/pop |
+| **Dynamic Array + qsort** | Timeline generation | O(n log n) sorting |
 
-| **User Publications** | **Stack (LIFO)** | Ensures the most recent post is always easily accessible (Top of Stack) for quick timeline generation. |
+## 📁 Project Structure
 
-| **Timeline** | **Temporary Sorted Array/List** | The Timeline is built dynamically by fetching data from various Stacks and applying a sorting algorithm to display chronologically. |
+```
+Social_Network_Project_C/
+├── src/
+│   ├── main.c                  # Main menu and application loop
+│   ├── abr_management.c        # BST operations (insert, search, delete)
+│   ├── relations_ll.c          # Linked list operations (friends/followers)
+│   ├── messages_stack.c        # Stack operations (posts)
+│   ├── affichage.c             # UI and display functions
+│   └── Data_persistence.c      # Save/load functions
+├── include/
+│   ├── structures.h            # All data structure definitions
+│   ├── abr_management.h        # BST function declarations
+│   ├── relations_ll.h          # Linked list function declarations
+│   ├── messages_stack.h        # Stack function declarations
+│   ├── affichage.h             # UI function declarations
+│   └── Data_persistence.h      # Persistence function declarations
+└── data/
+    ├── users.bin               # Binary user data (auto-created)
+    └── relations.txt           # Text relations data (auto-created)
+```
 
-* **File Structure:** The project adheres to standard C practices, separating definitions (`.h` in `include/`) from implementations (`.c` in `src/`). represented below -->
+## 🚀 Build & Run
 
-SocialNetwork_C/
-├── src/                  # Contains all function implementations (.c files)
-│   ├── main.c            # The main application loop (User Interface logic)
-│   ├── abr_management.c  # Binary Search Tree functions (Insert, Search, Delete)
-│   ├── relations_ll.c    # Linked List functions for relationships (Add, Remove)
-│   └── messages_stack.c  # Stack functions for messages (Push, Pop)
-│
-├── include/              # Contains all structure definitions and function declarations (.h files)
-│   ├── structures.h      # All data structures (User, LLNode, Message...)
-│   ├── abr_management.h  # Declarations for 'abr_management.c'
-│   ├── relations_ll.h    # Declarations for 'relations_ll.c'
-│   └── messages_stack.h  # Declarations for 'messages_stack.c'
-│
-├── data/                 # To store persistence files (Task 4)
-│   └── (empty files: users.bin, relations.txt)
-│
-├── Makefile             
+### Compile
+
+```bash
+gcc -Wall -Wextra -g -I./include \
+    src/abr_management.c \
+    src/affichage.c \
+    src/Data_persistence.c \
+    src/main.c \
+    src/messages_stack.c \
+    src/relations_ll.c \
+    -o social_network
+```
+
+### Run
+
+```bash
+./social_network
+```
+
+### Clean Build
+
+```bash
+rm -f social_network
+```
+
+## 🎮 Usage Example
+
+1. **Start the program**: `./social_network`
+2. **Create users**: Option 2 from main menu
+3. **Login**: Option 1 with your user ID
+4. **Add friends**: Option 7 from user menu
+5. **Publish posts**: Option 1 from user menu
+6. **View timeline**: Option 4 to see aggregated posts
+7. **Exit and save**: Option 6 from main menu
+
+## 📝 Data File Formats
+
+### users.bin (Binary)
+- User ID (int)
+- User name (char[50])
+- Post count (int)
+- Posts data (id, content, timestamp)
+
+### relations.txt (Text)
+```
+F 1 2    # Friendship between user 1 and 2
+S 3 1    # User 3 subscribes to user 1
+```
+
+## 🔧 Functions Implemented
+
+### BST Management (`abr_management.c`)
+- `InsertUser()` - Add new user
+- `searchUser()` - Find user by ID
+- `deleteUser()` - Remove user and cleanup
+- `get_max_node()` - Find maximum node
+- `delete_max()` - Delete maximum node
+
+### Relationships (`relations_ll.c`)
+- `ajouterAmi()` - Create bidirectional friendship
+- `sAbonner()` - Create subscription
+- `supprimerRelation()` - Remove relationship
+- `estEnRelation()` - Check if relation exists
+
+### Posts (`messages_stack.c`)
+- `empiler()` - Push new post
+- `depiler()` - Pop most recent post
+- `consulter()` - Peek at top post
+- `afficherTousLesPosts()` - Display all posts
+
+### Timeline (`affichage.c`)
+- `generate_timeline()` - Aggregate and sort posts from friends/followers
+- `display_friendships()` - Show friend list
+- `display_subscriptions()` - Show follower list
+
+## 💾 Memory Management
+
+All dynamic memory allocations are properly freed:
+- User nodes in BST
+- Linked list nodes (friends/followers)
+- Post stack nodes
+- Timeline temporary array
+
+## ⚙️ Compiler Flags
+
+- `-Wall -Wextra`: Enable all warnings
+- `-g`: Include debugging symbols
+- `-I./include`: Specify include directory
+          
 └── README.md             # Project documentation

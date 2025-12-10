@@ -1,3 +1,6 @@
+#ifndef STRUCTURES_H
+#define STRUCTURES_H
+
 //Define the linked list that will be inside the node as the friend and follower lists 
 typedef struct LLnode {
     int id;
@@ -33,7 +36,18 @@ typedef struct {
     node* root; //root of the binary search tree
 } BST;
 
+// Timeline post structure for displaying aggregated posts
+typedef struct timeline_post {
+    int user_id;
+    char user_name[50];
+    int post_id;
+    char content[256];
+    long timestamp;
+} timeline_post;
+
 // NOTE !! : we didn't create a structure for the timeline because 
 // it is only generated when the user wants to see it, 
 // so we can create it as a local variable in the function that generates it.
 // no need to store it permanently.
+
+#endif // STRUCTURES_H
