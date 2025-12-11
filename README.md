@@ -10,7 +10,7 @@ This project simulates a social network with user profiles, bidirectional friend
 
 ### User Management
 - Create new users with unique IDs
-- Search users by ID (O(log n) with BST)
+- Search users by ID 
 - Delete user accounts
 - View all registered users
 
@@ -35,14 +35,6 @@ This project simulates a social network with user profiles, bidirectional friend
 - Save/load relationships to text file (`data/relations.txt`)
 - All data persists between sessions
 
-## 🏗️ Data Structures
-
-| Structure | Usage | Complexity |
-|-----------|-------|------------|
-| **Binary Search Tree (BST)** | User storage and retrieval | O(log n) search/insert/delete |
-| **Linked List** | Friends and followers lists | O(1) insert, O(n) search |
-| **Stack (LIFO)** | User posts history | O(1) push/pop |
-| **Dynamic Array + qsort** | Timeline generation | O(n log n) sorting |
 
 ## 📁 Project Structure
 
